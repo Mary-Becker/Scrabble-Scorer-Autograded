@@ -2,7 +2,6 @@
 
 const input = require("readline-sync");
 
-// let pointValue = 0
 
 const oldPointStructure = {
   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
@@ -53,7 +52,6 @@ return letterPoints;
 
 function vowelBonusScorer(word){
    let letterPoints = ``;
-   let pointValue = 0
    let totalPoints = 0
    let vowels = ["A", "E", "I", "O", "U"]
    word = word.toUpperCase();
@@ -70,7 +68,19 @@ function vowelBonusScorer(word){
    return letterPoints
 }
 
-let scrabbleScorer;
+function scrabbleScorer(word) {
+   let letterPoints = ``
+   let totalPoints = 0
+   word = word.toLowerCase();
+   for (let i = 0; i < word.length; i++) {
+      let letter = word[i]
+      if (newPointStructure.hasOwnProperty(letter)) {
+         totalPoints += newPointStructure[letter];
+      }
+   }
+   letterPoints = `Total points for ${word} : ${totalPoints}`
+   return letterPoints
+}
 
 const scoringAlgorithms = [ 
   { 
@@ -86,7 +96,7 @@ const scoringAlgorithms = [
   {
    name: "Scrabble",
    description: "The traditional scoring algorithm",
-   scoreFunction: oldScrabbleScorer
+   scoreFunction: scrabbleScorer
   }
  ];
 
@@ -96,11 +106,19 @@ function scorerPrompt() {
 return scoringAlgorithms[num]
 }
  
-function transform(oldPointStructure) {};
+function transform(oldPointStructure) {
+   let newPointStructure = {};
+   for (let pointValue in oldPointStructure){
+      let letters = oldPointStructure[pointValue];
+      for(let i = 0; i < letters.length; i++) {
+         let letter = letters[i].toLowerCase();
+         newPointStructure[letter] = Number(pointValue);
+      }
+   }   
+   return newPointStructure;
+};
 
-let newPointStructure = {
-   
-}
+let newPointStructure = transform(oldPointStructure)
 
 function runProgram() { 
     let word = initialPrompt();
