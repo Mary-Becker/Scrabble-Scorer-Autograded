@@ -39,19 +39,17 @@ function initialPrompt() {
 };
 // Option 0, simple scorer, only each letter is only one piont.
  function simpleScorer(word){
-   let totalPoints = 0;
-   let letterPoints = ``;
+   let totalPoints = 0;;
    word = word.toUpperCase();
    for (i = 0; i < word.length; i++){
       totalPoints++
     } 
-   letterPoints = `Total points for '${word}': ${totalPoints}.`
-return letterPoints;
+
+return totalPoints;
  }
 
 // Option 1, vowel bonus, where vowels are worth 3 pts and the rest or worth 1.
 function vowelBonusScorer(word){
-   let letterPoints = ``;
    let totalPoints = 0
    let vowels = ["A", "E", "I", "O", "U"]
    word = word.toUpperCase();
@@ -64,13 +62,11 @@ function vowelBonusScorer(word){
       } 
    
       }
-   letterPoints = `Total points for '${word}': ${totalPoints}.`
-   return letterPoints;
+   return totalPoints;
 }
 
 // New scrabble function.
 function scrabbleScorer(word) {
-   let letterPoints = ``
    let totalPoints = 0
    word = word.toLowerCase();
    for (let i = 0; i < word.length; i++) {
@@ -79,25 +75,24 @@ function scrabbleScorer(word) {
          totalPoints += newPointStructure[letter];
       }
    }
-   letterPoints = `Total points for ${word} : ${totalPoints}`
-   return letterPoints
+   return totalPoints
 }
 // An array of objects where each has a function to be executed, depending on which object the user chooses.
 const scoringAlgorithms = [ 
   { 
    name: "Simple Score",
    description: "Each letter is worth 1 point.",
-   scoreFunction: simpleScorer
+   scorerFunction: simpleScorer
   },
   {
    name:"Bonus Vowels",
    description: "Vowls are 3 points, consonants are 1 point.",
-   scoreFunction: vowelBonusScorer
+   scorerFunction: vowelBonusScorer
   },
   {
    name: "Scrabble",
    description: "The traditional scoring algorithm",
-   scoreFunction: scrabbleScorer
+   scorerFunction: scrabbleScorer
   }
  ];
 
@@ -129,8 +124,9 @@ let newPointStructure = transform(oldPointStructure)
 function runProgram() { 
     let word = initialPrompt();
    let num = scorerPrompt();
-   let letterPoints = num.scoreFunction(word)
-   console.log(letterPoints)
+   let totalPoints = num.scorerFunction(word)
+   let finalScore = `Your total points for "${word}" is ${totalPoints}!`
+   console.log(finalScore)
    
    
 }
