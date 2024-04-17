@@ -29,15 +29,15 @@ function oldScrabbleScorer(word) {
 	}
 	return letterPoints;
  } 
-// your job is to finish writing these functions and variables that we've named //
-// don't change the names or your program won't work as expected. //
 
+
+// Where we are asking the user to play scrabble.
 function initialPrompt() {
    console.log("Let's play some scrabble!");
    let word = input.question("Enter word:");
    return word;
 };
-
+// Option 0, simple scorer, only each letter is only one piont.
  function simpleScorer(word){
    let totalPoints = 0;
    let letterPoints = ``;
@@ -49,7 +49,7 @@ function initialPrompt() {
 return letterPoints;
  }
 
-
+// Option 1, vowel bonus, where vowels are worth 3 pts and the rest or worth 1.
 function vowelBonusScorer(word){
    let letterPoints = ``;
    let totalPoints = 0
@@ -65,9 +65,10 @@ function vowelBonusScorer(word){
    
       }
    letterPoints = `Total points for '${word}': ${totalPoints}.`
-   return letterPoints
+   return letterPoints;
 }
 
+// New scrabble function.
 function scrabbleScorer(word) {
    let letterPoints = ``
    let totalPoints = 0
@@ -81,7 +82,7 @@ function scrabbleScorer(word) {
    letterPoints = `Total points for ${word} : ${totalPoints}`
    return letterPoints
 }
-
+// An array of objects where each has a function to be executed, depending on which object the user chooses.
 const scoringAlgorithms = [ 
   { 
    name: "Simple Score",
@@ -100,12 +101,17 @@ const scoringAlgorithms = [
   }
  ];
 
+//  Where we ask the user which scoring method/object to execute.
 function scorerPrompt() {
    num = input.question("Which Scoring method would you like?\n Simple Score: 0\n Vowl Bonus: 1\n Scrabble: 2\n")
    
 return scoringAlgorithms[num]
 }
  
+// Where the old point structure is transformed into the new point structure.
+//  by using a for in loop we are able to go into the old point structure and declare the values as letters,
+// make it case insensitive, then establish the new point structure with letters as the key. and the point values as integers. 
+
 function transform(oldPointStructure) {
    let newPointStructure = {};
    for (let pointValue in oldPointStructure){
